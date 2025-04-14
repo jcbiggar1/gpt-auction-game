@@ -75,17 +75,22 @@ function resetBidTimer() {
       winner.money -= currentBid;
       winner.items.push({ ...currentItem, paid: currentBid });
       auctionHistory.push({ ...currentItem, paid: currentBid, winner: winner.name });
+
+      io.emit('players', players); // ✅ Update balances after the round
     }
+
     io.emit('roundResult', {
       winner: currentWinner ? players[currentWinner].name : null,
       bid: currentBid,
       item: currentItem
     });
+
     Object.values(players).forEach(p => p.walked = false);
     currentItem = null;
     currentBid = 0;
     currentWinner = null;
     round++;
+
     if (round < MAX_ROUNDS) {
       setTimeout(startNextRound, 3000);
     } else {
