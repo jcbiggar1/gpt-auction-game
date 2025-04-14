@@ -4,6 +4,7 @@ let myName = '';
 function joinGame() {
   myName = document.getElementById('name').value;
   socket.emit('join', myName);
+  console.log('Joining with name', myName);
   document.getElementById('login').style.display = 'none';
   document.getElementById('game').style.display = 'block';
 }
