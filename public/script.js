@@ -3,8 +3,8 @@ let myName = '';
 
 function joinGame() {
   myName = document.getElementById('name').value;
+  if (!myName) return;
   socket.emit('join', myName);
-  console.log('Joining with name', myName);
   document.getElementById('login').style.display = 'none';
   document.getElementById('game').style.display = 'block';
 }
@@ -12,7 +12,7 @@ function joinGame() {
 socket.on('players', (players) => {
   const container = document.getElementById('players');
   container.innerHTML = '<h3>Players</h3>' + Object.values(players).map(p => 
-    \`\${p.name}: $\${p.money}\`
+    `${p.name}: $${p.money}`
   ).join('<br>');
 });
 
@@ -25,21 +25,21 @@ socket.on('newItem', (item) => {
 });
 
 socket.on('newBid', ({ bidder, bid }) => {
-  document.getElementById('current-bid').textContent = \`Current Bid: $\${bid} by \${bidder}\`;
+  document.getElementById('current-bid').textContent = `Current Bid: $${bid} by ${bidder}`;
 });
 
 socket.on('roundResult', ({ winner, bid, item }) => {
   document.getElementById('result').textContent = winner 
-    ? \`\${winner} won the \${item.name} for $\${bid}!\` 
+    ? `${winner} won the ${item.name} for $${bid}!` 
     : 'No one bid on the item.';
 });
 
 socket.on('gameOver', (results) => {
   let output = '<h2>Game Over</h2>';
   for (const [name, data] of Object.entries(results)) {
-    output += \`<h3>\${name}</h3><ul>\` + 
-              data.items.map(i => \`<li>\${i.name} (Paid: $\${i.paid}, Value: $\${i.value}, Profit: $\${i.profit})</li>\`).join('') + 
-              \`</ul><strong>Total Profit: $\${data.profit}</strong><br>\`;
+    output += `<h3>${name}</h3><ul>` + 
+              data.items.map(i => `<li>${i.name} (Paid: $${i.paid}, Value: $${i.value}, Profit: $${i.profit})</li>`).join('') + 
+              `</ul><strong>Total Profit: $${data.profit}</strong><br>`;
   }
   document.getElementById('game').innerHTML = output;
 });
