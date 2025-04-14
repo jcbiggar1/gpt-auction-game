@@ -23,7 +23,7 @@ let bidTimeout;
 let round = 0;
 let auctionHistory = [];
 
-const MAX_ROUNDS = 10;
+const MAX_ROUNDS = 5;
 const STARTING_MONEY = 10000;
 const BID_INCREMENT = 200;
 const INACTIVITY_LIMIT = 5000; // 5 seconds
@@ -118,10 +118,10 @@ async function generateItem() {
     model: "gpt-3.5-turbo",
     messages: [{
       role: "user",
-      content: `Create a mysterious auction item. Respond in JSON like this:
+      content: `Create a mysterious auction item or antique. Respond in JSON like this:
 {
-  "name": "The Whispering Box",
-  "description": "Said to echo with secrets of ancient kings.",
+  "name": "Old Music Box",
+  "description": "Said to echo with secrets of ancient kings from the 1700's.",
   "value": 4200
 }`
     }]
