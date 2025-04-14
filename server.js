@@ -7,9 +7,7 @@ const cors = require('cors');
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
-  cors: {
-    origin: "*"
-  }
+  cors: { origin: "*" }
 });
 
 app.use(cors());
@@ -40,7 +38,12 @@ io.on('connection', (socket) => {
     }
     players[socket.id] = { name, money: STARTING_MONEY, items: [] };
     io.emit('players', players);
-    if (Object.keys(players).length === 2) startNextRound(); // Change to 8 to auto-start
+  });
+
+  socket.on('startGame', () => {
+    if (Object.keys(players).length > 1 && round === 0) {
+      startNextRound();
+    }
   });
 
   socket.on('bid', () => {
@@ -101,12 +104,13 @@ async function startNextRound() {
   currentItem = item;
   currentBid = 0;
   currentWinner = null;
+  io.emit('roundNumber', { round: round + 1, total: MAX_ROUNDS });
   io.emit('newItem', item);
 }
 
 async function generateItem() {
   const chat = await openai.chat.completions.create({
-    model: "gpt-4",
+    model: "gpt-3.5-turbo",
     messages: [{
       role: "user",
       content: `Create a mysterious auction item. Respond in JSON like this:
@@ -117,6 +121,7 @@ async function generateItem() {
 }`
     }]
   });
+
   const item = JSON.parse(chat.choices[0].message.content);
 
   const img = await openai.images.generate({
