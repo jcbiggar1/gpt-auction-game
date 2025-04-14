@@ -2,7 +2,7 @@ const socket = io(window.location.origin);
 let myName = '';
 
 function joinGame() {
-  myName = document.getElementById('name').value;
+  myName = document.getElementById('name').value.trim();
   if (!myName) return;
   socket.emit('join', myName);
   document.getElementById('login').style.display = 'none';
@@ -11,9 +11,21 @@ function joinGame() {
 
 socket.on('players', (players) => {
   const container = document.getElementById('players');
-  container.innerHTML = '<h3>Players</h3>' + Object.values(players).map(p => 
+  const all = Object.values(players);
+  container.innerHTML = '<h3>Players</h3>' + all.map(p => 
     `${p.name}: $${p.money}`
   ).join('<br>');
+
+  // Show "Start Game" button only if I'm the first player
+  if (all[0].name === myName && all.length > 1) {
+    document.getElementById('start-btn').style.display = 'inline-block';
+  } else {
+    document.getElementById('start-btn').style.display = 'none';
+  }
+});
+
+socket.on('roundNumber', ({ round, total }) => {
+  document.getElementById('round-info').textContent = `Round ${round} of ${total}`;
 });
 
 socket.on('newItem', (item) => {
@@ -44,9 +56,15 @@ socket.on('gameOver', (results) => {
   document.getElementById('game').innerHTML = output;
 });
 
+function startGame() {
+  socket.emit('startGame');
+  document.getElementById('start-btn').style.display = 'none';
+}
+
 function bid() {
   socket.emit('bid');
 }
+
 function walk() {
   socket.emit('walk');
 }
