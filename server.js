@@ -118,11 +118,11 @@ async function generateItem() {
     model: "gpt-3.5-turbo",
     messages: [{
       role: "user",
-      content: `Create a mysterious and visually striking auction item. The item should feel valuable, cinematic, and emotionally compelling — something players would fight to bid on. It must not reveal its true identity or value. Respond in JSON like this:
+      content: `Create a mysterious and realistic high-value auction item. It should be an antique, collectible, or historical object with rich detail. The description must hint at its story or former owner, its rarity, or its uncertain origin — but do not reveal its exact value or purpose. Make it feel emotionally tempting and slightly enigmatic, as if it could be worth a fortune or be a forgotten relic. Think high-end estate auction, dusty private collections, or museum-worthy pieces with rumors surrounding them. Respond in JSON like this:
 {
-  "name": "The Emberlock Device",
-  "description": "Once sealed in a forgotten vault beneath a war-torn city, this obsidian artifact hums faintly when touched. Some say it holds the memory of fire itself. Its surface is engraved with symbols no one has fully deciphered. This might be your only chance to possess it before it vanishes again.",
-  "image_prompt": "A glowing obsidian cube resting on ancient stone, engraved with unknown symbols. Soft red light glows from within. Surrounded by cracked runes and faint mist. Moody, cinematic lighting in a dark room with dust in the air.",
+  "name": "Hand-Cranked Phonograph with Gilded Horn",
+  "description": "Recovered from a London townhouse slated for demolition, this 1890s hand-cranked phonograph features a fully intact gilded brass horn and original manufacturer’s mark — though the maker remains unknown in all records. It plays, albeit faintly, a haunting melody that one collector claimed they 'heard in a dream long before.' Some believe it once belonged to a reclusive composer lost to history.",
+  "image_prompt": "A vintage hand-cranked phonograph with a large, gilded brass horn, sitting on a velvet-covered auction pedestal. Warm, moody lighting from above. Rich wood grain, minor scratches on the base, and a worn crank handle. Dust particles visible in the air.",
   "value": 4200
 }`
     }]
