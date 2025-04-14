@@ -118,10 +118,11 @@ async function generateItem() {
     model: "gpt-3.5-turbo",
     messages: [{
       role: "user",
-      content: `Create a mysterious auction item or antique. Respond in JSON like this:
+      content: `Create a mysterious and visually striking auction item. The item should feel valuable, cinematic, and emotionally compelling — something players would fight to bid on. It must not reveal its true identity or value. Respond in JSON like this:
 {
-  "name": "Old Music Box",
-  "description": "Said to echo with secrets of ancient kings from the 1700's.",
+  "name": "The Emberlock Device",
+  "description": "Once sealed in a forgotten vault beneath a war-torn city, this obsidian artifact hums faintly when touched. Some say it holds the memory of fire itself. Its surface is engraved with symbols no one has fully deciphered. This might be your only chance to possess it before it vanishes again.",
+  "image_prompt": "A glowing obsidian cube resting on ancient stone, engraved with unknown symbols. Soft red light glows from within. Surrounded by cracked runes and faint mist. Moody, cinematic lighting in a dark room with dust in the air.",
   "value": 4200
 }`
     }]
@@ -130,7 +131,7 @@ async function generateItem() {
   const item = JSON.parse(chat.choices[0].message.content);
 
   const img = await openai.images.generate({
-    prompt: `${item.name} - ${item.description}`,
+    prompt: `${item.image_prompt}`,
     n: 1,
     size: "512x512"
   });
