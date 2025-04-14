@@ -1,4 +1,4 @@
-const socket = io();
+const socket = io(window.location.origin);
 let myName = '';
 
 function joinGame() {
